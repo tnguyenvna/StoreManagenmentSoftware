@@ -1,12 +1,10 @@
 package com.example.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,22 +18,19 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.entity.Product;
-import com.example.repository.ProductRepository;
-import com.example.service.ProductService;
+import com.example.service.implement.IProductService;
 import com.example.util.MessageUtil;
 
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
-	@Autowired
-	private ProductRepository productRepository;
 
 	@Autowired
-	private ProductService productService;
+	private IProductService iProductService;
 
 	@GetMapping
 	public ResponseEntity<List<Product>> getAllProducts() {
-		List<Product> products = productService.getAllProducts();
+		List<Product> products = iProductService.getAllProducts();
 		if (products.isEmpty()) {
 			return ResponseEntity.noContent().build();
 		}
@@ -44,7 +39,7 @@ public class ProductController {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getProductById(@PathVariable int id) {
-		Optional<Product> productOpt = productService.getProductById(id);
+		Optional<Product> productOpt = iProductService.getProductById(id);
 		if (productOpt.isPresent()) {
 			return ResponseEntity.ok(productOpt.get());
 		}
@@ -53,14 +48,14 @@ public class ProductController {
 
 	@PostMapping
 	public ResponseEntity<Map<String, String>> createProduct(@RequestBody Product product) {
-		Product createdProduct = productService.createProduct(product);
+		Product createdProduct = iProductService.createProduct(product);
 		return MessageUtil.productCreatedSuccessfullyResponse(createdProduct.getId());
 	}
 
 	@PostMapping("/{id}/uploadImage")
 	public ResponseEntity<?> uploadImage(@PathVariable int id, @RequestParam("image") MultipartFile file) {
 		try {
-			String imageUrl = productService.saveProductImage(id, file);
+			String imageUrl = iProductService.saveProductImage(id, file);
 			return MessageUtil.imageUploadSuccessResponse(imageUrl);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -69,9 +64,9 @@ public class ProductController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Map<String, String>> updateProduct(@PathVariable int id,
+	public ResponseEntity<Map<String, String>> updateProductById(@PathVariable int id,
 			@RequestBody Product productDetails) {
-		Product updatedProduct = productService.updateProduct(id, productDetails);
+		Product updatedProduct = iProductService.updateProductById(id, productDetails);
 		if (updatedProduct == null) {
 			return MessageUtil.productNotFoundResponse();
 		}
@@ -79,8 +74,8 @@ public class ProductController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Map<String, String>> deleteProduct(@PathVariable int id) {
-		boolean isDeleted = productService.deleteProduct(id);
+	public ResponseEntity<Map<String, String>> deleteProductById(@PathVariable int id) {
+		boolean isDeleted = iProductService.deleteProductById(id);
 		if (!isDeleted) {
 			return MessageUtil.productNotFoundResponse();
 		}

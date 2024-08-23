@@ -39,7 +39,7 @@ public class ProductService implements IProductService{
 		return productRepository.save(product);
 	}
 
-	public Product updateProduct(int id, Product productDetail) {
+	public Product updateProductById(int id, Product productDetail) {
 		Optional<Product> productOpt = productRepository.findByIdAndIsActiveTrue(id);
 		if (productOpt.isPresent()) {
 			Product product = productOpt.get();
@@ -54,7 +54,7 @@ public class ProductService implements IProductService{
 	}
 
 	@Transactional
-	public boolean deleteProduct(int productId) {
+	public boolean deleteProductById(int productId) {
 		Optional<Product> productOpt = productRepository.findByIdAndIsActiveTrue(productId);
 		if (productOpt.isPresent()) {
 			Product product = productOpt.get();

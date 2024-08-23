@@ -55,30 +55,30 @@ public class OrderService {
 		return MessageUtil.orderUpdateSuccessfullyResponse();
 	}
 
-	@Transactional
-	public ResponseEntity<Order> createOrder(Order order) {
+//	@Transactional
+//	public ResponseEntity<Order> createOrder(Order order) {
 
 		// Tải khách hàng từ DB
-		Customer customer = customerService.getCustomerById(order.getCustomer().getId()).getBody();
-		if (customer == null) {
-			return ResponseEntity.notFound().build();
-		}
-		order.setCustomer(customer);
-
-		// Cài đặt tham chiếu đến đơn hàng trong mỗi chi tiết đơn hàng
-		for (OrderDetail detail : order.getOrderDetails()) {
+//		Customer customer = customerService.getCustomerById(order.getCustomer().getId()).getBody();
+//		if (customer == null) {
+//			return ResponseEntity.notFound().build();
+//		}
+//		order.setCustomer(customer);
+//
+//		// Cài đặt tham chiếu đến đơn hàng trong mỗi chi tiết đơn hàng
+//		for (OrderDetail detail : order.getOrderDetails()) {
 			// Tải sản phẩm từ DB
-			Product product = productService.getProductById(detail.getProduct().getId()).getBody();
-			if (product == null) {
-				return ResponseEntity.notFound().build();
-			}
-			detail.setProduct(product);
-			detail.setOrder(order);
-		}
+//			Product product = productService.getProductById(detail.getProduct().getId()).getBody();
+//			if (product == null) {
+//				return ResponseEntity.notFound().build();
+//			}
+//			detail.setProduct(product);
+//			detail.setOrder(order);
+//		}
+//
+//		Order createdOrder = orderRepository.save(order);
+//		return ResponseEntity.ok(createdOrder);
 
-		Order createdOrder = orderRepository.save(order);
-		return ResponseEntity.ok(createdOrder);
-
-	}
+//	}
 
 }

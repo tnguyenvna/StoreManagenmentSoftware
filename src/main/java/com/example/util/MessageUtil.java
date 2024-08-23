@@ -6,8 +6,6 @@ import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.example.entity.Product;
-
 public class MessageUtil {
 
 	public static Map<String, String> response = new HashMap<>();
@@ -44,7 +42,24 @@ public class MessageUtil {
 		return createResponseEntity("Image upload failed.", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	//
+	// Customer
+	public static ResponseEntity<Map<String, String>> customerNotFoundResponse() {
+		return createResponseEntity("Customer not found.", HttpStatus.NOT_FOUND);
+	}
+
+	public static ResponseEntity<Map<String, String>> customerCreatedSuccessfullyResponse(int productId) {
+		return createResponseEntity("Customer created successfully with ID: " + productId, HttpStatus.CREATED);
+	}
+
+	public static ResponseEntity<Map<String, String>> customerUpdatedSuccessfullyResponse() {
+		return createResponseEntity("Customer updated successfully.", HttpStatus.OK);
+	}
+
+	public static ResponseEntity<Map<String, String>> customerDeletedSuccessfullyResponse() {
+		return createResponseEntity("Customer deleted successfully.", HttpStatus.OK);
+	}
+	
+	// Order
 	public static ResponseEntity<Map<String, String>> orderNotFoundResponse() {
 		return createResponseEntity("Order not found.", HttpStatus.NOT_FOUND);
 	}
@@ -53,7 +68,5 @@ public class MessageUtil {
 		return createResponseEntity("Order updated successfully.", HttpStatus.OK);
 	}
 
-	public static ResponseEntity<Map<String, String>> customerDeletedSuccessfullyResponse() {
-		return createResponseEntity("Customer deleted successfully.", HttpStatus.OK);
-	}
+
 }

@@ -43,10 +43,10 @@ public class OrderController {
 		return orderService.getOrderById(id);
 	}
 
-	@PostMapping
-	public ResponseEntity<Order> createOrder(@RequestBody Order order) {
-		return orderService.createOrder(order);
-	}
+//	@PostMapping
+//	public ResponseEntity<Order> createOrder(@RequestBody Order order) {
+//		return orderService.createOrder(order);
+//	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<Map<String, String>> updateOrder(@PathVariable int id, @RequestBody Order orderDetails) {

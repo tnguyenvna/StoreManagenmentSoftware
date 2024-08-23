@@ -16,9 +16,9 @@ public interface IProductService {
 
 	Product createProduct(Product product);
 
-	Product updateProduct(int id, Product productDetail);
+	Product updateProductById(int id, Product productDetail);
 
-	boolean deleteProduct(int productId);
+	boolean deleteProductById(int productId);
 
 	String saveProductImage(int id, MultipartFile file) throws IOException;
 }
